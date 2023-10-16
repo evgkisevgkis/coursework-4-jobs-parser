@@ -1,12 +1,11 @@
 import requests
 from abc import ABC, abstractmethod
-import json
 
 
 class API(ABC):
     """Абстрактный класс для получения данных через API"""
     def __init__(self):
-        self.vacancies = None
+        self.vacancies = []
 
     @abstractmethod
     def request_vacancies(self):
@@ -20,8 +19,11 @@ class HeadHunterAPI(API):
                        'page': page,
                        'per_page': 100}
         req = requests.get('https://api.hh.ru/vacancies', query_param)
-        return req.json()
-
-
-hh = HeadHunterAPI()
-print(json.dumps(hh.request_vacancies(), ensure_ascii=False, indent=1))
+        pages_count = req.json()['pages']
+        while page <= pages_count:
+            req = requests.get('https://api.hh.ru/vacancies', query_param)
+            vacancies = req.json()['items']
+            for i in vacancies:
+                self.vacancies.append(i)
+            page += 1
+        return self.vacancies
