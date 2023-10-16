@@ -3,10 +3,13 @@ from abc import ABC, abstractmethod
 
 
 class API(ABC):
-    def __init__(self, query_param=None, salary=None):
+    """Абстрактный класс для получения данных через API"""
+    def __init__(self):
         self.vacancies = None
-        self.query_param = query_param
-        self.salary = salary
+        self.query_param = None
+        self.salary = None
+        self.url = None
+        self.req = requests.get(self.url, self.query_param)
 
     @abstractmethod
     def request_vacancies(self):
