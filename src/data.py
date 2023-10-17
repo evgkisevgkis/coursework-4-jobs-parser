@@ -21,3 +21,14 @@ class Vacancy:
             self.salary_to = vac['payment_to']
             self.experience = vac['experience']['id']
             self.description = vac['work']
+
+    def __gt__(self, other):
+        return self.salary_from > other.salary_from
+
+    def __str__(self):
+        return f"""Название вакансии: {self.name}
+                   ссылка на вакансию: {self.url}
+                   зарплата от: {self.salary_from}
+                            до: {self.salary_to}
+                   требуемый опыт: {self.experience}
+                   краткое описание: {self.description}"""
