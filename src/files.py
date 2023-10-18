@@ -1,4 +1,5 @@
 import json
+from os import remove
 
 
 class FileWorker:
@@ -24,3 +25,11 @@ class FileWorker:
         """Функция добавляет в конец файла переданные в неё данные"""
         with open(self.path, 'a', encoding='utf-8') as f:
             f.write(json.dumps(data, ensure_ascii=False, indent=1))
+
+    def del_json(self):
+        """Функция удаляет существующий файл с вакансиями"""
+        try:
+            remove(self.path)
+        except FileNotFoundError:
+            print('Невозможно удалить файл так как он отсутствует')
+
