@@ -8,9 +8,17 @@ class FileWorker:
 
     def save_to_json(self, data):
         """Функция сохраняет переданные в неё данные в файл json"""
-        with open(self.path, 'w', encoding='utf-8') as f:
-            for i in data:
-                f.write(json.dumps(i, ensure_ascii=False, indent=1))
+        try:
+            with open(self.path, 'x', encoding='utf-8') as f:
+                for i in data:
+                    f.write(json.dumps(i, ensure_ascii=False, indent=1))
+        except FileExistsError:
+            if input('Файл с вакансиями уже существует. Хотите перезаписать? (д/н) ') == 'д':
+                with open(self.path, 'w', encoding='utf-8') as f:
+                    for i in data:
+                        f.write(json.dumps(i, ensure_ascii=False, indent=1))
+            else:
+                pass
 
     def add_to_json(self, data):
         """Функция добавляет в конец файла переданные в неё данные"""
