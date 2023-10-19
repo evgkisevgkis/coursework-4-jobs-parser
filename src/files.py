@@ -17,8 +17,7 @@ class FileWorker:
         except FileExistsError:
             if input('Файл с вакансиями уже существует. Хотите перезаписать? (д/н) ') == 'д':
                 with open(self.path, 'w', encoding='utf-8') as f:
-                    for i in data:
-                        f.write(json.dumps(i, ensure_ascii=False, indent=1, cls=VacancyEncoder))
+                    f.write(json.dumps(data, ensure_ascii=False, indent=1, cls=VacancyEncoder))
             else:
                 pass
 
