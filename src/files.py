@@ -48,3 +48,13 @@ class FileWorker:
         except FileNotFoundError:
             print('Невозможно искать в файле без самого файла')
         return box
+
+    def count_vacancies(self):
+        """Функция подсчёта количества записей в файле"""
+        with open(self.path, 'r', encoding='utf-8') as f:
+            a = f.read()
+            a = json.loads(a)
+            vacancies_counter = 0
+            for i in a:
+                vacancies_counter += 1
+            return vacancies_counter
