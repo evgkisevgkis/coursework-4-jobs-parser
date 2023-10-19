@@ -33,3 +33,18 @@ class FileWorker:
             remove(self.path)
         except FileNotFoundError:
             print('Невозможно удалить файл так как он отсутствует')
+
+    def get_by_salary(self, salary_from=1, salary_to=None):
+        """Функция для выборки из файла по зарплате"""
+        box = []
+        try:
+            with open(self.path, 'r', encoding='utf-8') as f:
+                a = f.read()
+                a = json.loads(a)
+                for i in a:
+                    if i['salary_from'] is not None and i['salary_from'] >= salary_from:
+                        if salary_to is None or i['salary_to'] <= salary_to:
+                            box.append(i)
+        except FileNotFoundError:
+            print('Невозможно искать в файле без самого файла')
+        return box
