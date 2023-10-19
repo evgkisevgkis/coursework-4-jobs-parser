@@ -1,5 +1,6 @@
 import json
 from os import remove
+from src.data import VacancyEncoder
 
 
 class FileWorker:
@@ -11,13 +12,13 @@ class FileWorker:
         """Функция сохраняет переданные в неё данные в файл json"""
         try:
             with open(self.path, 'x', encoding='utf-8') as f:
-                for i in data:
-                    f.write(json.dumps(i, ensure_ascii=False, indent=1))
+                f.write(json.dumps(data, ensure_ascii=False, indent=1, cls=VacancyEncoder))
+
         except FileExistsError:
             if input('Файл с вакансиями уже существует. Хотите перезаписать? (д/н) ') == 'д':
                 with open(self.path, 'w', encoding='utf-8') as f:
                     for i in data:
-                        f.write(json.dumps(i, ensure_ascii=False, indent=1))
+                        f.write(json.dumps(i, ensure_ascii=False, indent=1, cls=VacancyEncoder))
             else:
                 pass
 
@@ -32,4 +33,3 @@ class FileWorker:
             remove(self.path)
         except FileNotFoundError:
             print('Невозможно удалить файл так как он отсутствует')
-
