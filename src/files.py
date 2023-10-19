@@ -43,7 +43,9 @@ class FileWorker:
                 a = json.loads(a)
                 for i in a:
                     if i['salary_from'] is not None and i['salary_from'] >= salary_from:
-                        if salary_to is None or i['salary_to'] <= salary_to:
+                        if salary_to is None:
+                            box.append(i)
+                        elif i['salary_to'] is not None and i['salary_to'] <= salary_to:
                             box.append(i)
         except FileNotFoundError:
             print('Невозможно искать в файле без самого файла')
