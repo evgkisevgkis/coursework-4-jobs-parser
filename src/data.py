@@ -1,3 +1,7 @@
+import json
+from typing import Any
+
+
 class Vacancy:
     """Класс для вакансий"""
     def __init__(self, vac):
@@ -32,3 +36,10 @@ class Vacancy:
                             до: {self.salary_to}
                    требуемый опыт: {self.experience}
                    краткое описание: {self.description}"""
+
+
+class VacancyEncoder(json.JSONEncoder):
+    def default(self, obj: Any) -> Any:
+        if isinstance(obj, Vacancy):
+            return obj.__dict__
+        return json.JSONEncoder.default(self, obj)
