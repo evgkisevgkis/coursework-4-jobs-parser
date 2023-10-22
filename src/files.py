@@ -6,6 +6,7 @@ from src.data import VacancyEncoder
 class FileWorker:
     """Класс для работы с файлом формата json"""
     def __init__(self):
+        """Задается имя файла, можно указать путь в другую папку"""
         self.path = 'vacancies.json'
 
     def save_to_json(self, data):
@@ -56,6 +57,6 @@ class FileWorker:
             a = f.read()
             a = json.loads(a)
             vacancies_counter = 0
-            for i in a:
+            for _ in a:
                 vacancies_counter += 1
             return vacancies_counter
