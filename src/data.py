@@ -5,6 +5,7 @@ from typing import Any
 class Vacancy:
     """Класс для вакансий"""
     def __init__(self, vac):
+        """Заполнение полей данными, полученными от HH и SJ API"""
         try:
             self.name = vac['name']
             self.url = vac['alternate_url']
@@ -27,9 +28,11 @@ class Vacancy:
             self.description = vac['work']
 
     def __gt__(self, other):
+        """Переопределен для возможности сравнения по зарплате"""
         return self.salary_from > other.salary_from
 
     def __str__(self):
+        """Для строкового вывода вакансии"""
         return f"""Название вакансии: {self.name}
                    ссылка на вакансию: {self.url}
                    зарплата от: {self.salary_from}
@@ -39,6 +42,7 @@ class Vacancy:
 
 
 class VacancyEncoder(json.JSONEncoder):
+    """Класс для корректной кодировки экземпляров в JSON"""
     def default(self, obj: Any) -> Any:
         if isinstance(obj, Vacancy):
             return obj.__dict__
