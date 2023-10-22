@@ -9,7 +9,7 @@ sj = SuperJobAPI()
 hh_vac = hh.request_vacancies()
 sj_vac = sj.request_vacancies()
 
-# Инициализация экземпляров
+# Инициализация экземпляров класса Vacancy и добавление в общий список
 basket = []
 for i in hh_vac:
     vaca = Vacancy(i)
@@ -19,12 +19,14 @@ for v in sj_vac:
     vaca = Vacancy(v)
     basket.append(vaca)
 
+# Сохранение списка в файл
 fj = FileWorker()
 fj.save_to_json(basket)
 print(f"Загружено и сохранено в файл {fj.count_vacancies()} вакансий")
 
 
 def user_interaction():
+    """Функция для взаимодействия пользователя с сохраненными в файл данными"""
     print('Введите границы поиска по зарплате')
     salary_input_from = int(input('от '))
     try:
